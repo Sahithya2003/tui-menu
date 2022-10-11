@@ -1,7 +1,7 @@
 ## Copyright(c) 2022 Sreesankar - All Rights Reserverd
 #
 # @version 0.1
-
+SHELL:=/bin/bash
 build:
 	gcc main.c menu.c -o main
 

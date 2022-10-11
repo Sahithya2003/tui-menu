@@ -18,7 +18,7 @@ int cdc_recv(uint8_t *buf, uint16_t len) {
   return 0;
 }
 void cdc_putchar(uint8_t x) { cdc_send(&x, 1); }
-void cdc_getchar(uint8_t x) { cdc_recv(&x, 1); }
+void cdc_getchar(uint8_t *x) { cdc_recv(x, 1); }
 int main(int argc, char **argv) {
   if (argc != 2)
     return 1;
