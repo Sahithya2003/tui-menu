@@ -58,8 +58,25 @@ void getxy(uint_fast16_t *y, uint_fast16_t *x) {
   // get cursor = '^[6n'
   // response = '^[<v>;<h>R'
   cdc_putchar(0x1b);
+  cdc_putchar('[');
   put_int(6);
   cdc_putchar('n');
+  //requested
+  uint8_t i;
+  uint8_t x;
+  uint8_t y;
+  while(1){
+    cdc_getchar(&i);
+    if(i != 0x1b){
+      cdc_getchar(&i);
+      *x=i;
+      cdc_getchar(&i);
+      cdc_getchar(&i);
+      *y=i;
+    }
+    
+  }
+
 }
 
 void drawbox(float mv, float mh) { 
