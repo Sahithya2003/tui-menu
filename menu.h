@@ -5,7 +5,7 @@ extern int serial_port;
 int cdc_send(uint8_t *buf, uint16_t len);
 int cdc_recv(uint8_t *buf, uint16_t len);
 void cdc_putchar(uint8_t);
-void cdc_getchar(uint8_t);
+void cdc_getchar(uint8_t *);
 //////////////////////////////////////
 #define LEN(X) sizeof(X) / sizeof(X[0])
 
