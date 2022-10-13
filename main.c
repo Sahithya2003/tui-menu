@@ -19,6 +19,10 @@ int cdc_recv(uint8_t *buf, uint16_t len) {
 }
 void cdc_putchar(uint8_t x) { cdc_send(&x, 1); }
 void cdc_getchar(uint8_t *x) { cdc_recv(x, 1); }
+void HAL_Delay(uint32_t delay) {
+  usleep(delay * 1000);
+  return;
+}
 int main(int argc, char **argv) {
   if (argc != 2)
     return 1;

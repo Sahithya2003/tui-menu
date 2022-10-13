@@ -1,5 +1,6 @@
 #include "menu.h"
 #include <stdint.h>
+#include <stdlib.h>
 
 void redraw();
 void clear();
@@ -20,35 +21,22 @@ void move(uint_fast16_t y, uint_fast16_t x) {
 }
 void clear() { cdc_send(seq_clear, LEN(seq_clear)); }
 /*print int as string*/
-void put_int(uint_fast16_t x) {
+void put_int(uint_fast16_t i) {
+  uint_fast16_t ii;
 
-  uint_fast8_t i = 0;
-  uint_fast8_t remainder;
-  uint_fast8_t reverse = 0;
-  // x=1;
-  while (x != 0) {
-
-    remainder = x % 10;
-    if (remainder == 0 && reverse == 0) {
-      i++;
+  if (i >= 10) {
+    if (i >= 100) {
+      ii = i / 100;
+      cdc_putchar(ii + '0');
+      i -= 100 * ii;
     }
-    reverse = reverse * 10 + remainder;
-    x /= 10;
-  } // REVERSING
-  x = reverse;
-  remainder = i;
 
-  while (x) {
-    i = x % 10;
-    x = x / 10;
-    cdc_putchar(i + '0');
-
-  } // PUTING CHAR FROM BACK
-
-  while (remainder != 0) {
-    cdc_putchar('0');
-    remainder--;
+    ii = i / 10;
+    cdc_putchar(ii + '0');
+    i -= 10 * ii;
   }
+
+  cdc_putchar(i + '0');
 }
 
 void getxy(uint_fast16_t *y, uint_fast16_t *x) {
@@ -106,7 +94,9 @@ void redraw() {
 uint8_t menu_handler() {
   // move(6,9);
   // cdc_send("helloo", 6);
-  redraw();
-
+  while (1) {
+    redraw();
+    HAL_Delay(500);
+  }
   return chosen;
 }
