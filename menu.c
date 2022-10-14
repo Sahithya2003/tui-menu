@@ -75,12 +75,12 @@ void drawbox(float mv, float mh) {
   uint_fast16_t xmid = xmax * mh;
   uint_fast16_t ymid = ymax * mv;
 
-  for (uint_fast8_t i = 1; i <= ymax; i++) {
+  for (uint_fast16_t i = 1; i <= ymax; i++) {
     move(i, xmid);
     cdc_putchar('|');
   }
 
-  for (uint_fast8_t i = xmid + 1; i <= xmax; i++) {
+  for (uint_fast16_t i = xmid + 1; i <= xmax; i++) {
     move(ymid, i);
     cdc_putchar('_');
   }
