@@ -13,7 +13,7 @@ void HAL_Delay(uint32_t delay);
 #define ESC \033
 #define CLEAR [2J
 
-typedef struct {
+typedef struct  {
   uint8_t *title;
   uint8_t *desc; // desciption
   uint8_t color; // some id for color for later use

@@ -13,8 +13,8 @@ uint_fast16_t xmax, ymax; // screen sizee
 static uint8_t seq_clear[4] = {"\033[2J"};
 static uint8_t seq_curpos[4] = {"\033[6n"};
 /* colors */
-static uint8_t seq_bgcolor[7] = {"\033[42;1m"};
-static uint8_t seq_reset[4] = {"\033[0m"};
+uint8_t seq_bgcolor[7] = {"\033[42;1m"};
+uint8_t seq_reset[4] = {"\033[0m"};
 
 void move(uint_fast16_t y, uint_fast16_t x) {
   cdc_putchar(0x1b);
@@ -106,7 +106,7 @@ uint8_t getxymax() {
 }
 void drawlist() {
   move(1, 4);
-  cdc_send(seq_bgwhite, LEN(seq_bgwhite));
+  cdc_send(seq_bgcolor, LEN(seq_bgcolor));
   cdc_send("hello bro", 7);
   cdc_send(seq_reset, LEN(seq_reset));
 }
