@@ -1,4 +1,5 @@
 #include "menu.h"
+#include "menu-config.h"
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -12,7 +13,7 @@ uint_fast16_t xmax, ymax; // screen sizee
 static uint8_t seq_clear[4] = {"\033[2J"};
 static uint8_t seq_curpos[4] = {"\033[6n"};
 /* colors */
-static uint8_t seq_bgwhite[7] = {"\033[42;1m"};
+static uint8_t seq_bgcolor[7] = {"\033[42;1m"};
 static uint8_t seq_reset[4] = {"\033[0m"};
 
 void move(uint_fast16_t y, uint_fast16_t x) {
@@ -108,6 +109,18 @@ void drawlist() {
   cdc_send(seq_bgwhite, LEN(seq_bgwhite));
   cdc_send("hello bro", 7);
   cdc_send(seq_reset, LEN(seq_reset));
+}
+inline void reset() { cdc_send(seq_reset, LEN(seq_reset)); }
+inline void setbg() { cdc_send(seq_bgcolor, LEN(seq_bgcolor)); }
+void drawlab() {
+  Menuitem *m;
+  for (int i = 0; i < LEN(menu); i++) {
+    m = menu[i];
+    setbg();
+    cdc_send(m->title, m->title_len);
+    reset();
+  }
+  /* m; */
 }
 uint8_t menu_handler() {
   // move(6,9);

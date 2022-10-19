@@ -8,13 +8,11 @@
 //   uint8_t desc_len; // not used
 // } Menuitem;
 
-
 Menuitem menu[] = {
-    {"Lab - 01", "Lab 1 is simple, but powerful. very pewerful", 4, 8, 44 },
-    {"Lab - 02", "Lab 2 is simple, but powerful. very pewerful", 4, 8, 44 },
-    {"Lab - 03", "Lab 3 is simple, but powerful. very pewerful", 4, 8, 44 },
-    {"Lab - 04", "Lab 4 is simple, but powerful. very pewerful", 4, 8, 44 },
-    {"Lab - 05", "Lab 5 is simple, but powerful. very pewerful", 4, 8, 44 },
-    {"Lab - 06", "Lab 6 is simple, but powerful. very pewerful", 4, 8, 44 },
-    {"Lab - 07", "Lab 7 is simple, but powerful. very pewerful", 4, 8, 44 }
-};
+    {"Lab - 01", "Lab 1 is simple, but powerful. very pewerful", 4, 8, 44},
+    {"Lab - 02", "Lab 2 is simple, but powerful. very pewerful", 4, 8, 44},
+    {"Lab - 03", "Lab 3 is simple, but powerful. very pewerful", 4, 8, 44},
+    {"Lab - 04", "Lab 4 is simple, but powerful. very pewerful", 4, 8, 44},
+    {"Lab - 05", "Lab 5 is simple, but powerful. very pewerful", 4, 8, 44},
+    {"Lab - 06", "Lab 6 is simple, but powerful. very pewerful", 4, 8, 44},
+    {"Lab - 07", "Lab 7 is simple, but powerful. very pewerful", 4, 8, 44}};
