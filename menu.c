@@ -11,6 +11,10 @@ uint_fast16_t xmax, ymax; // screen sizee
 
 static uint8_t seq_clear[4] = {"\033[2J"};
 static uint8_t seq_curpos[4] = {"\033[6n"};
+/* colors */
+static uint8_t seq_bgwhite[7] = {"\033[42;1m"};
+static uint8_t seq_reset[4] = {"\033[0m"};
+
 void move(uint_fast16_t y, uint_fast16_t x) {
   cdc_putchar(0x1b);
   cdc_putchar('[');
@@ -91,11 +95,28 @@ void redraw() {
   drawbox(0.5, 0.5);
 }
 
+/* return 1 if changed else 0 */
+/* TODO: change function name */
+uint8_t getxymax() {
+  move(399, 399);
+  uint_fast16_t x = xmax, y = ymax;
+  getxy(&ymax, &xmax);
+  return x != xmax || y != ymax;
+}
+void drawlist() {
+  move(1, 4);
+  cdc_send(seq_bgwhite, LEN(seq_bgwhite));
+  cdc_send("hello bro", 7);
+  cdc_send(seq_reset, LEN(seq_reset));
+}
 uint8_t menu_handler() {
   // move(6,9);
   // cdc_send("helloo", 6);
   while (1) {
-    redraw();
+    if (getxymax()) {
+      redraw();
+      drawlist();
+    }
     HAL_Delay(500);
   }
   return chosen;
