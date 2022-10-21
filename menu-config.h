@@ -7,6 +7,7 @@
 //   uint8_t title_len;
 //   uint8_t desc_len; // not used
 // } Menuitem;
+uint_fast16_t lmargin = 5;
 
 Menuitem menu[] = {
     {"Lab - 01", "Lab 1 is simple, but powerful. very pewerful", 4, 8, 44},

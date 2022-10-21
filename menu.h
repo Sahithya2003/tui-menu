@@ -1,3 +1,4 @@
+#pragma once
 #include <stdint.h>
 #include <stdio.h>
 //////////////////////////////////////
@@ -10,7 +11,7 @@ void HAL_Delay(uint32_t delay);
 //////////////////////////////////////
 #define LEN(X) sizeof(X) / sizeof(X[0])
 
-#define ESC \033
+#define ESC 033
 #define CLEAR [2J
 
 typedef struct  {
