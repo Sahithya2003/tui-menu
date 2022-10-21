@@ -105,19 +105,14 @@ uint8_t getxymax() {
   getxy(&ymax, &xmax);
   return x != xmax || y != ymax;
 }
-<<<<<<< Updated upstream
 void drawlist() {
   move(1, 4);
   cdc_send(seq_bgcolor, LEN(seq_bgcolor));
   cdc_send("hello bro", 7);
   cdc_send(seq_reset, LEN(seq_reset));
 }
-inline void reset() { cdc_send(seq_reset, LEN(seq_reset)); }
-inline void setbg() { cdc_send(seq_bgcolor, LEN(seq_bgcolor)); }
-=======
 void reset() { cdc_send(seq_reset, LEN(seq_reset)); }
 void setbg() { cdc_send(seq_bgcolor, LEN(seq_bgcolor)); }
->>>>>>> Stashed changes
 void drawlab() {
   Menuitem *m;
   for (int i = 0; i < LEN(menu); i++) {
@@ -137,20 +132,27 @@ void redraw() {
 }
 uint_fast8_t input_handler() {
   uint8_t c;
-  cdc_getchar(&c);
-  if (c == '\033') {
+  while (1) {
     cdc_getchar(&c);
-    if (c == '[') {
+    if (c == '\033') {
       cdc_getchar(&c);
-      if (c == 'A') {
-        selection = (selection + 1) % (LEN(menu) - 0);
-        return 1;
-      } else if (c == 'B') {
-        selection = (selection - 1) % (LEN(menu) - 0);
-        return 1;
+      if (c == '[') {
+        cdc_getchar(&c);
+        if (c == 'A') {
+          selection = (selection + 1) % (LEN(menu) - 0);
+          return 1;
+        } else if (c == 'B') {
+          selection = (selection - 1) % (LEN(menu) - 0);
+          return 1;
+        } else {
+          continue;
+        }
       }
+    } else {
+      continue;
     }
   }
+
   return 0;
 }
 uint8_t menu_handler() {
