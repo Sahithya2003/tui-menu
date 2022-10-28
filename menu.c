@@ -10,6 +10,9 @@ void put_int(uint_fast16_t);
 
 uint8_t chosen = 0;
 uint_fast16_t xmax, ymax; // screen sizee
+uint_fast16_t xmid;
+uint_fast16_t ymid;
+
 
 static uint8_t seq_clear[4] = {"\033[2J"};
 static uint8_t seq_curpos[4] = {"\033[6n"};
@@ -83,8 +86,8 @@ void getxy(uint_fast16_t *y, uint_fast16_t *x) {
 void drawbox(float mv, float mh) {
   move(399, 399);
   getxy(&ymax, &xmax);
-  uint_fast16_t xmid = xmax * mh;
-  uint_fast16_t ymid = ymax * mv;
+  xmid = xmax * mh;
+  ymid = ymax * mv;
 
   for (uint_fast16_t i = 1; i <= ymax; i++) {
     move(i, xmid);
@@ -125,10 +128,29 @@ void drawlab() {
   }
 }
 
+void drawlabdetials() {
+  Menuitem *m;
+  //xmid //ymid
+  m = &menu[selection];
+  uint_fast16_t start = 0;
+  
+  
+  int_fast16_t len = xmax-xmid-(DESCMARG*2);
+  
+  for (int i = 1; ; i++) {
+    move(i+5,xmid+DESCMARG+1); 
+    cdc_send(&m->desc[start], (i*len >= m->desc_len) ? (m->desc_len - start) : len );
+    start = i*len ;
+    if(start >= m->desc_len)  break;
+  }
+  
+}
+
 void redraw() {
   clear();
-  drawbox(0.75, 0.5);
+  drawbox(MV,MH);
   drawlab();
+  drawlabdetials();
 }
 uint_fast8_t input_handler() {
   uint8_t c;
