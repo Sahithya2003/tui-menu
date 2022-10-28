@@ -139,10 +139,11 @@ uint_fast8_t input_handler() {
       if (c == '[') {
         cdc_getchar(&c);
         if (c == 'A') {
-          selection = (selection + 1) % (LEN(menu) - 0);
+          selection = (selection - 1);
+          if(selection== -1)  selection = LEN(menu)-1;
           return 1;
         } else if (c == 'B') {
-          selection = (selection - 1) % (LEN(menu) - 0);
+          selection = (selection + 1) % (LEN(menu) - 0);
           return 1;
         } else {
           continue;
