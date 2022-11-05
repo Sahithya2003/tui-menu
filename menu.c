@@ -20,6 +20,8 @@ static uint8_t seq_curpos[4] = {"\033[6n"};
 /* colors */
 uint8_t seq_bgcolor[7] = {"\033[42;1m"};
 uint8_t seq_reset[4] = {"\033[0m"};
+// uint8_t seq_fgcolor[7] = {RED};
+
 
 /********STATE VARIABLES********/
 int8_t selection = 0;
@@ -172,14 +174,18 @@ void drawfooter() {
   uint_fast16_t y = ((1 - MH) * xmax) / 2 - 57 / 2;
   
   // CompatrIoT
+  cdc_send(FGGREEN, LEN(FGGREEN));
   for (uint_fast16_t i = 0; i < 8; i++) {
     move(ymid+i+2,xmid+y);  cdc_send(compatriot[i], 57);
   }
 
+
   //redentio
-  y = ((1 - MH) * xmax) / 2 - 17 / 2;
+  cdc_send(FGRED, LEN(FGRED));
+  y = ((1 - MH) * xmax) / 2 - 17 / 2; 
   move(ymid+11,xmid+y);
   cdc_send("Redantio Solution", 17);
+  cdc_send(seq_reset, LEN(seq_reset));
   
 }
 
