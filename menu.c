@@ -169,7 +169,7 @@ void drawfooter() {
   };
 
   getxymax();
-  int y = ymid;
+  uint_fast16_t y = ((1 - MH) * xmax) / 2 - 57 / 2;
   
   // CompatrIoT
   for (uint_fast16_t i = 0; i < 8; i++) {
@@ -177,8 +177,8 @@ void drawfooter() {
   }
 
   //redentio
-  y = (ymax-ymid);
-  move(ymid+9+2,xmid+y);
+  y = ((1 - MH) * xmax) / 2 - 17 / 2;
+  move(ymid+11,xmid+y);
   cdc_send("Redantio Solution", 17);
   
 }
