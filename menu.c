@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 void redraw();
 void clear();
 void put_int(uint_fast16_t);
@@ -86,8 +87,9 @@ void getxy(uint_fast16_t *y, uint_fast16_t *x) {
 void drawbox(float mv, float mh) {
   move(399, 399);
   getxy(&ymax, &xmax);
-  xmid = xmax * mh;
-  ymid = ymax * mv;
+  
+  xmid = xmax * mh; //vertical line
+  ymid = ymax * mv; //horizontal line
 
   for (uint_fast16_t i = 1; i <= ymax; i++) {
     move(i, xmid);
@@ -111,7 +113,6 @@ uint8_t getxymax() {
 void drawlist() {
   move(1, 4);
   cdc_send(seq_bgcolor, LEN(seq_bgcolor));
-  cdc_send("hello bro", 7);
   cdc_send(seq_reset, LEN(seq_reset));
 }
 void reset() { cdc_send(seq_reset, LEN(seq_reset)); }
@@ -146,11 +147,59 @@ void drawlabdetials() {
   
 }
 
+void drawfooter() {
+//  _____                             _      _____    _____ 
+// /  __ \                           | |    |_   _|  |_   _|
+// | /  \/ ___  _ __ ___  _ __   __ _| |_ _ __| |  ___ | |  
+// | |    / _ \| '_ ` _ \| '_ \ / _` | __| '__| | / _ \| |  
+// | \__/\ (_) | | | | | | |_) | (_| | |_| | _| || (_) | |  
+//  \____/\___/|_| |_| |_| .__/ \__,_|\__|_| \___/\___/\_/  
+//                       | |                                
+//                       |_|                                
+
+  static uint8_t compatriot[8][57] = {
+  {" _____                             _      _____    _____ "},
+  {"/  __ \\                           | |    |_   _|  |_   _|"},
+  {"| /  \\/ ___  _ __ ___  _ __   __ _| |_ _ __| |  ___ | |  "},
+  {"| |    / _ \\| '_ ` _ \\| '_ \\ / _` | __| '__| | / _ \\| |  "},
+  {"| \\__/\\ (_) | | | | | | |_) | (_| | |_| | _| || (_) | |  "},
+  {" \\____/\\___/|_| |_| |_| .__/ \\__,_|\\__|_| \\___/\\___/\\_/  "},
+  {"                      | |                                "},
+  {"                      |_|                                "},
+  };
+
+  getxymax();
+  int y = ymid;
+  
+  // CompatrIoT
+  for (uint_fast16_t i = 0; i < 8; i++) {
+    move(ymid+i+2,xmid+y);  cdc_send(compatriot[i], 57);
+  }
+
+  //redentio
+  y = (ymax-ymid);
+  move(ymid+9+2,xmid+y);
+  cdc_send("Redantio Solution", 17);
+  
+}
+
+
 void redraw() {
   clear();
-  drawbox(MV,MH);
-  drawlab();
-  drawlabdetials();
+  getxymax();
+  static uint8_t error[] = "Increase screen size";
+  if(ymax <= 30 || xmax <= 95){
+    move(ymax/2, xmax/2-10);
+    cdc_send(error, LEN(error));    
+    move(ymax/2+1, xmax/2-10);
+    cdc_send("press any arrow key", 20);    
+  }
+  else{
+    drawbox(MV,MH);     // layout
+    drawlab();          // lab list
+    drawlabdetials();   // Description
+    drawfooter();       // footer
+  }
 }
 uint_fast8_t input_handler() {
   uint8_t c;

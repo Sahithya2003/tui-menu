@@ -11,7 +11,7 @@ void HAL_Delay(uint32_t delay);
 //////////////////////////////////////
 #define LEN(X) sizeof(X) / sizeof(X[0])
 #define MV 0.75
-#define MH 0.5
+#define MH 0.3
 #define DESCMARG 3
 #define TITLEMARG 5
 #define ESC 033
