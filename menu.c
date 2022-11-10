@@ -117,27 +117,42 @@ void drawlist() {
   cdc_send(seq_bgcolor, LEN(seq_bgcolor));
   cdc_send(seq_reset, LEN(seq_reset));
 }
+//////////////////////////////////////
 void reset() { cdc_send(seq_reset, LEN(seq_reset)); }
 void setbg() { cdc_send(seq_bgcolor, LEN(seq_bgcolor)); }
 void drawlab() {
   Menuitem *m;
+  move(2, lmargin);
+  cdc_send(FGGREEN,LEN(FGGREEN));
+  cdc_send(" TRAINING LAB ",14);
+  reset();
   for (int i = 0; i < LEN(menu); i++) {
     m = &menu[i];
-    move((i + 1) * 2, lmargin);
-    if (i == selection)
+    
+    move((i + 1) * 2 +3, lmargin);
+    if (i == selection){
       setbg();
+      move(((i + 1) * 2)-1 +3, lmargin);
+      cdc_send("               ",14);
+      move(((i + 1) * 2)+1 +3, lmargin);
+      cdc_send("               ",14);
+      move(((i + 1) * 2) +3, lmargin);
+    }
     cdc_send(" Lab - ",7);
     put_int(i);
     if((m->property & 0xF0)==0x00)
-      cdc_send(" UART ",6);
+      cdc_send(" UART",6);
     else if(m->property >> 4 == 1)
-      cdc_send(" JTAG ",6);
+      cdc_send(" JTAG",6);
     else if(m->property >> 4 == 2)
-      cdc_send(" I2C  ",6);
+      cdc_send(" I2C ",6);
     else if(m->property >> 4 == 3)
-      cdc_send(" SPI  ",6);
+      cdc_send(" SPI ",6);
     else if(m->property >> 4 == 4)
-      cdc_send(" BLE  ",6);
+      cdc_send(" BLE ",6);
+    if(i<=9){
+      cdc_send(" ",1);
+    }
     reset();
   }
 }

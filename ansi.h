@@ -1,7 +1,4 @@
 #pragma once
-// https://stackoverflow.com/questions/4842424/list-of-ansi-color-escape-sequences
-
-
 /////////FOREGROUND//////////
 #define FGBLACK "\033[30;1m"
 #define FGRED "\033[31;1m"

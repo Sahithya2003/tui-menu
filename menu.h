@@ -16,7 +16,7 @@ void HAL_Delay(uint32_t delay);
 #define TITLEMARG 5
 #define ESC 033
 #define CLEAR [2J
-
+//////////////////////////////////////
 typedef struct  {
   uint8_t *title;
   uint8_t *desc; // desciption
@@ -24,5 +24,5 @@ typedef struct  {
   uint8_t title_len;
   uint16_t desc_len; // not used
 } Menuitem;
-
+//////////////////////////////////////
 uint8_t menu_handler();
