@@ -2,14 +2,6 @@
 
 uint_fast16_t lmargin = 5;
 
-// typedef struct {
-//   uint8_t *title;
-//   uint8_t *desc; // desciption
-//   uint8_t color; // some id for color for later use
-//   uint8_t title_len;
-//   uint8_t desc_len; // not used
-// } Menuitem;
-
 static uint8_t lab_1_Desc[]  ="  UART Identification Method 1 using micro-controller pins and DMM (Digital Multimeter) conductivity test. The objective is to identify UART pinouts on the PCB board provided we have the knowledge of microcontroller UART pins, which can be found in the datasheet of the microcontroller.";
 static uint8_t lab_2_Desc[]  ="  UART Identification Method 2 using DMM Voltage tests on the board pinouts. The objective is to identify UART pinouts on the PCB board when we do not have the knowledge of the microcontroller UART pins and the datasheet of the microcontroller.";
 static uint8_t lab_3_Desc[]  ="  Once the UART port is identified, communicate with the target device to further analyze read/write access to the device. The objective is to understand the process of interfacing with the target device, identifying the correct baud rate that it uses to communicate and analyze the read/write access.";
@@ -33,26 +25,26 @@ static uint8_t lab_20_Desc[] ="  Crack the LTK (Long Term Key) and decrypt the c
 
 ///////////////////////////////////////////////////////////
 
-static uint8_t lab_1[]  =" UART-Identification Method 1";
-static uint8_t lab_2[]  =" UART-Identification Method 2";
-static uint8_t lab_3[]  =" UART-Communication With Target";
-static uint8_t lab_4[]  =" JTAG-Identification Method 1";
-static uint8_t lab_5[]  =" JTAG-Identification Method 2";
-static uint8_t lab_6[]  =" JTAG-Microcontroller firmware extraction over JTAG";
-static uint8_t lab_7[]  =" JTAG-Microcontroller firmware patching over JTAG";
-static uint8_t lab_8[]  =" JTAG-Microcontroller peripheral access over JTAG";
-static uint8_t lab_9[]  =" I2C -chip recon naissance";
-static uint8_t lab_10[] =" I2C -communication sniffing to bypass authentication";
-static uint8_t lab_11[] =" I2C -chip memory dumping";
-static uint8_t lab_12[] =" SPI -chip recon";
-static uint8_t lab_13[] =" SPI -communication sniffing to bypass authentication";
-static uint8_t lab_14[] =" SPI -chip memory dumping and firmware extraction";
-static uint8_t lab_15[] =" BLE -Recon";
-static uint8_t lab_16[] =" BLE -GATT Services and Characteristics enumeration";
-static uint8_t lab_17[] =" BLE -Sniffing GATT protocol communication (Android)";
-static uint8_t lab_18[] =" BLE -Analyze GATT Protocol communication";
-static uint8_t lab_19[] =" BLE -Controlling the Device";
-static uint8_t lab_20[] =" BLE -Crack BLE LTK";
+static uint8_t lab_1[]  =" UART - Identification Method 1";
+static uint8_t lab_2[]  =" UART - Identification Method 2";
+static uint8_t lab_3[]  =" UART - Communication With Target";
+static uint8_t lab_4[]  =" JTAG - Identification Method 1";
+static uint8_t lab_5[]  =" JTAG - Identification Method 2";
+static uint8_t lab_6[]  =" JTAG - Microcontroller firmware extraction over JTAG";
+static uint8_t lab_7[]  =" JTAG - Microcontroller firmware patching over JTAG";
+static uint8_t lab_8[]  =" JTAG - Microcontroller peripheral access over JTAG";
+static uint8_t lab_9[]  =" I2C - chip recon naissance";
+static uint8_t lab_10[] =" I2C - communication sniffing to bypass authentication";
+static uint8_t lab_11[] =" I2C - chip memory dumping";
+static uint8_t lab_12[] =" SPI - chip recon";
+static uint8_t lab_13[] =" SPI - communication sniffing to bypass authentication";
+static uint8_t lab_14[] =" SPI - chip memory dumping and firmware extraction";
+static uint8_t lab_15[] =" BLE - Recon";
+static uint8_t lab_16[] =" BLE - GATT Services and Characteristics enumeration";
+static uint8_t lab_17[] =" BLE - Sniffing GATT protocol communication (Android)";
+static uint8_t lab_18[] =" BLE - Analyze GATT Protocol communication";
+static uint8_t lab_19[] =" BLE - Controlling the Device";
+static uint8_t lab_20[] =" BLE - Crack BLE LTK";
 
 ////////////////////////////////////////////////////
 // (0xA0|0x0A)=> (UART | COLOR) 
@@ -61,6 +53,7 @@ static uint8_t lab_20[] =" BLE -Crack BLE LTK";
 // 2 : I2C
 // 3 : SPI
 // 4 : BLE
+////////////////////////////////////////////////////
 
 Menuitem menu[] = {
     {lab_1 , lab_1_Desc, (0x00|0x0A), LEN(lab_1 ) , LEN(lab_1_Desc)},
@@ -84,4 +77,10 @@ Menuitem menu[] = {
     {lab_19, lab_7_Desc, (0x40|0x0A), LEN(lab_19) , LEN(lab_7_Desc)},
     {lab_20, lab_8_Desc, (0x40|0x0A), LEN(lab_20) , LEN(lab_8_Desc)}};
 
-
+// typedef struct {
+//   uint8_t *title;
+//   uint8_t *desc; // desciption
+//   uint8_t property; // property = protocol(id) + color(id)
+//   uint8_t title_len;
+//   uint8_t desc_len; // not used
+// } Menuitem;
