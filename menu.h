@@ -20,7 +20,7 @@ void HAL_Delay(uint32_t delay);
 typedef struct  {
   uint8_t *title;
   uint8_t *desc; // desciption
-  uint8_t color; // some id for color for later use
+  uint8_t property; // some id for color for later use
   uint8_t title_len;
   uint16_t desc_len; // not used
 } Menuitem;

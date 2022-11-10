@@ -126,7 +126,19 @@ void drawlab() {
     move((i + 1) * 2, lmargin);
     if (i == selection)
       setbg();
-    cdc_send(m->title, m->title_len);
+    //cdc_send(m->title, m->title_len);
+    cdc_send(" Lab - ",7);
+    put_int(i);
+    if((m->property & 0xF0)==0x00)
+      cdc_send(" UART ",6);
+    else if(m->property>>4 ==1)
+      cdc_send(" JTAG ",6);
+    else if(m->property>>4 ==2)
+      cdc_send(" I2C  ",6);
+    else if(m->property>>4 ==3)
+      cdc_send(" SPI  ",6);
+    else if(m->property>>4 ==4)
+      cdc_send(" BLE  ",6);
     reset();
   }
 }
@@ -183,10 +195,10 @@ void drawfooter() {
   //Redentio Solutions
   cdc_send(FGRED, LEN(FGRED));
   y = ((1 - MH) * xmax) / 2 - 17 / 2; 
-  move(ymid+8+3,xmid+y+10);
+  move(ymid + x + 8,xmid+y+10);
   cdc_send("Redantio Solution", 17);
   cdc_send(seq_reset, LEN(seq_reset));
-  move(0,0);
+  move(399,399);
   
 }
 //////////////////////////////////////
