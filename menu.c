@@ -145,7 +145,7 @@ void drawlab() {
         
         cdc_send(FGGREEN, LEN(FGGREEN));
         move(((i + 1) * 2)-1 +3, lmargin);
-        cdc_send(FGGREEN,LEN(FGGREEN));
+        cdc_send(GREEN,LEN(GREEN));
         cdc_send("▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",42);
         move(((i + 1) * 2)+1 +3, lmargin);
         cdc_send("▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀",42);
