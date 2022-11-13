@@ -128,32 +128,86 @@ void drawlab() {
   reset();
   for (int i = 0; i < LEN(menu); i++) {
     m = &menu[i];
+    if((LEN(menu))*2 +1+3 >= ymax){
+      move(ymax, lmargin+6);
+      cdc_send(FGGREEN,LEN(FGGREEN));
+      cdc_send("V",1);
+      reset();
+    }
+    // if((i)*2 +1+3 >= ymax){
+    //   for (int k=3; k<=ymax ; k++){
+    //     move(k,lmargin);
+    //     cdc_send("              ",14);
+    //   }
+    // }
+    if(((i+1)*2) +1+3+1 <= ymax){
+      if (i == selection){
+        
+        cdc_send(FGGREEN, LEN(FGGREEN));
+        move(((i + 1) * 2)-1 +3, lmargin);
+        cdc_send(FGGREEN,LEN(FGGREEN));
+        cdc_send("▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",42);
+        move(((i + 1) * 2)+1 +3, lmargin);
+        cdc_send("▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀",42);
+        reset();
+        setbg();
+      }
+      move((i + 1) * 2 +3, lmargin);
+      cdc_send(" Lab - ",7);
+      put_int(i);
+      if((m->property & 0xF0)==0x00)
+        cdc_send(" UART",6);
+      else if(m->property >> 4 == 1)
+        cdc_send(" JTAG",6);
+      else if(m->property >> 4 == 2)
+        cdc_send(" I2C ",6);
+      else if(m->property >> 4 == 3)
+        cdc_send(" SPI ",6);
+      else if(m->property >> 4 == 4)
+        cdc_send(" BLE ",6);
+      if(i<=9)
+        cdc_send(" ",1);
+      
+      reset();
+    } 
+    else{
+      int jumper = ymax%2==1 ? 6 : 7 ;
+      if (i == selection){
+        for(int k=((LEN(menu) + 2) * 2)+1 +jumper-ymax; k<=ymax; k++){
+          move(k, lmargin);
+          cdc_send("               ",14);
+          // to clear the old list (lab0, lab 1 ,etc)
+        }
+        
     
-    move((i + 1) * 2 +3, lmargin);
-    if (i == selection){
-      setbg();
-      move(((i + 1) * 2)-1 +3, lmargin);
-      cdc_send("               ",14);
-      move(((i + 1) * 2)+1 +3, lmargin);
-      cdc_send("               ",14);
-      move(((i + 1) * 2) +3, lmargin);
-    }
-    cdc_send(" Lab - ",7);
-    put_int(i);
-    if((m->property & 0xF0)==0x00)
-      cdc_send(" UART",6);
-    else if(m->property >> 4 == 1)
-      cdc_send(" JTAG",6);
-    else if(m->property >> 4 == 2)
-      cdc_send(" I2C ",6);
-    else if(m->property >> 4 == 3)
-      cdc_send(" SPI ",6);
-    else if(m->property >> 4 == 4)
-      cdc_send(" BLE ",6);
-    if(i<=9){
-      cdc_send(" ",1);
-    }
-    reset();
+        move(((i + 2) * 2)-1 +jumper-ymax, lmargin);
+        cdc_send(FGGREEN,LEN(FGGREEN));
+        cdc_send("▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",42);
+        move(((i + 2) * 2)+1 +jumper-ymax, lmargin);
+        cdc_send("▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀",42);
+        reset();
+        setbg();
+        
+        move(((i + 2) * 2) +jumper-ymax, lmargin);
+        cdc_send(" Lab - ",7);
+        put_int(i);
+        if((m->property & 0xF0)==0x00)
+          cdc_send(" UART",6);
+        else if(m->property >> 4 == 1)
+          cdc_send(" JTAG",6);
+        else if(m->property >> 4 == 2)
+          cdc_send(" I2C ",6);
+        else if(m->property >> 4 == 3)
+          cdc_send(" SPI ",6);
+        else if(m->property >> 4 == 4)
+          cdc_send(" BLE ",6);
+        if(i<=9)
+          cdc_send(" ",1);
+      
+      }
+      
+      reset();
+    }   
   }
 }
 //////////////////////////////////////
