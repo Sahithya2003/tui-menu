@@ -143,7 +143,7 @@ void drawlab() {
     if(((i+1)*2) +1+3+1 <= ymax){
       if (i == selection){
         
-        cdc_send(FGGREEN, LEN(FGGREEN));
+       
         move(((i + 1) * 2)-1 +3, lmargin);
         cdc_send(GREEN,LEN(GREEN));
         cdc_send("▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",42);
