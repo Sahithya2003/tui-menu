@@ -13,6 +13,7 @@ uint8_t chosen = 0;
 uint_fast16_t xmax, ymax; // screen sizee
 uint_fast16_t xmid;
 uint_fast16_t ymid;
+uint_fast16_t state=0;
 
 static uint8_t seq_clear[4] = {"\033[2J"};
 static uint8_t seq_curpos[4] = {"\033[6n"};
@@ -124,28 +125,20 @@ void drawlab() {
   Menuitem *m;
   move(2, lmargin);
   cdc_send(FGGREEN,LEN(FGGREEN));
-  cdc_send(" TRAINING LAB ",14);
+  cdc_send(" TRAINING LABS ",15);
   reset();
   for (int i = 0; i < LEN(menu); i++) {
     m = &menu[i];
     if((LEN(menu))*2 +1+3 >= ymax){
       move(ymax, lmargin+6);
-      cdc_send(FGGREEN,LEN(FGGREEN));
+      cdc_send(seq_fgcolor,LEN(seq_fgcolor));
       cdc_send("V",1);
       reset();
     }
-    // if((i)*2 +1+3 >= ymax){
-    //   for (int k=3; k<=ymax ; k++){
-    //     move(k,lmargin);
-    //     cdc_send("              ",14);
-    //   }
-    // }
     if(((i+1)*2) +1+3+1 <= ymax){
-      if (i == selection){
-        
-       
+      if (i == selection){    
         move(((i + 1) * 2)-1 +3, lmargin);
-        cdc_send(GREEN,LEN(GREEN));
+        cdc_send(seq_fgcolor,LEN(seq_fgcolor));
         cdc_send("▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",42);
         move(((i + 1) * 2)+1 +3, lmargin);
         cdc_send("▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀",42);
@@ -171,6 +164,8 @@ void drawlab() {
       reset();
     } 
     else{
+      
+      // state = 1;
       int jumper = ymax%2==1 ? 6 : 7 ;
       if (i == selection){
         for(int k=((LEN(menu) + 2) * 2)+1 +jumper-ymax; k<=ymax; k++){
@@ -178,16 +173,13 @@ void drawlab() {
           cdc_send("               ",14);
           // to clear the old list (lab0, lab 1 ,etc)
         }
-        
-    
         move(((i + 2) * 2)-1 +jumper-ymax, lmargin);
-        cdc_send(FGGREEN,LEN(FGGREEN));
+        cdc_send(seq_fgcolor,LEN(seq_fgcolor));
         cdc_send("▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",42);
         move(((i + 2) * 2)+1 +jumper-ymax, lmargin);
         cdc_send("▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀",42);
         reset();
         setbg();
-        
         move(((i + 2) * 2) +jumper-ymax, lmargin);
         cdc_send(" Lab - ",7);
         put_int(i);
@@ -203,9 +195,7 @@ void drawlab() {
           cdc_send(" BLE ",6);
         if(i<=9)
           cdc_send(" ",1);
-      
       }
-      
       reset();
     }   
   }

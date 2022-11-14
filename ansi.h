@@ -2,7 +2,7 @@
 /////////FOREGROUND//////////
 #define FGBLACK "\033[30;1m"
 #define FGRED "\033[31;1m"
-#define FGGREEN "\033[32;1m"
+#define FGGREEN "\033[32m"
 #define FGYELLOW "\033[33;1m"
 #define FGBLUE "\033[34;1m"
 #define FGPURPLE "\033[35;1m"
