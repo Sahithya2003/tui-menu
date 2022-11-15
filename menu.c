@@ -14,6 +14,8 @@ uint_fast16_t xmax, ymax; // screen sizee
 uint_fast16_t xmid;
 uint_fast16_t ymid;
 uint_fast16_t state=0;
+uint_fast16_t page=0;
+
 
 static uint8_t seq_clear[4] = {"\033[2J"};
 static uint8_t seq_curpos[4] = {"\033[6n"};
@@ -127,15 +129,17 @@ void drawlab() {
   cdc_send(FGGREEN,LEN(FGGREEN));
   cdc_send(" TRAINING LABS ",15);
   reset();
-  for (int i = 0; i < LEN(menu); i++) {
-    m = &menu[i];
-    if((LEN(menu))*2 +1+3 >= ymax){
+  /////////BUG CHANGE//////////
+  uint_fast16_t labmax = ((ymax - 5)/2)-1;
+  if(selection <= labmax){
+    for(uint_fast16_t i=0;i<= labmax && i< LEN(menu); i++){
+      m = &menu[i];
+      if((LEN(menu))*2 +1+3 >= ymax){
       move(ymax, lmargin+6);
       cdc_send(seq_fgcolor,LEN(seq_fgcolor));
-      cdc_send("V",1);
+      cdc_send("\\/",2);
       reset();
-    }
-    if(((i+1)*2) +1+3+1 <= ymax){
+      }
       if (i == selection){    
         move(((i + 1) * 2)-1 +3, lmargin);
         cdc_send(seq_fgcolor,LEN(seq_fgcolor));
@@ -162,43 +166,46 @@ void drawlab() {
         cdc_send(" ",1);
       
       reset();
-    } 
-    else{
-      
-      // state = 1;
-      int jumper = ymax%2==1 ? 6 : 7 ;
-      if (i == selection){
-        for(int k=((LEN(menu) + 2) * 2)+1 +jumper-ymax; k<=ymax; k++){
-          move(k, lmargin);
-          cdc_send("               ",14);
-          // to clear the old list (lab0, lab 1 ,etc)
-        }
-        move(((i + 2) * 2)-1 +jumper-ymax, lmargin);
+    }
+  }
+  else {
+    for(uint_fast16_t i=labmax+1;i< LEN(menu); i++){
+      m = &menu[i];
+      if((LEN(menu))*2 +1+3 >= ymax){
+      move(4, lmargin+6);
+      cdc_send(seq_fgcolor,LEN(seq_fgcolor));
+      cdc_send("/\\",2);
+      reset();
+      }
+      if (i == selection){    
+        move(((i-labmax + 1) * 2)-1 +3, lmargin);
         cdc_send(seq_fgcolor,LEN(seq_fgcolor));
         cdc_send("▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",42);
-        move(((i + 2) * 2)+1 +jumper-ymax, lmargin);
+        move(((i-labmax + 1) * 2)+1 +3, lmargin);
         cdc_send("▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀",42);
         reset();
         setbg();
-        move(((i + 2) * 2) +jumper-ymax, lmargin);
-        cdc_send(" Lab - ",7);
-        put_int(i);
-        if((m->property & 0xF0)==0x00)
-          cdc_send(" UART",6);
-        else if(m->property >> 4 == 1)
-          cdc_send(" JTAG",6);
-        else if(m->property >> 4 == 2)
-          cdc_send(" I2C ",6);
-        else if(m->property >> 4 == 3)
-          cdc_send(" SPI ",6);
-        else if(m->property >> 4 == 4)
-          cdc_send(" BLE ",6);
-        if(i<=9)
-          cdc_send(" ",1);
       }
+      move((i-labmax + 1) * 2 +3, lmargin);
+      cdc_send(" Lab - ",7);
+      put_int(i);
+      if((m->property & 0xF0)==0x00)
+        cdc_send(" UART",6);
+      else if(m->property >> 4 == 1)
+        cdc_send(" JTAG",6);
+      else if(m->property >> 4 == 2)
+        cdc_send(" I2C ",6);
+      else if(m->property >> 4 == 3)
+        cdc_send(" SPI ",6);
+      else if(m->property >> 4 == 4)
+        cdc_send(" BLE ",6);
+      if(i<=9)
+        cdc_send(" ",1);
+      
       reset();
-    }   
+    }
   }
+  ////////BUG CHANGE///////////
 }
 //////////////////////////////////////
 void drawlabdetials() {
@@ -213,7 +220,7 @@ void drawlabdetials() {
   cdc_send(m->title, m->title_len);
   cdc_send(seq_reset, LEN(seq_reset));
 
-  for (int i = 1; ; i++) {
+  for (uint_fast16_t i = 1; ; i++) {
     move(i+5,xmid+DESCMARG+1); 
     cdc_send(&m->desc[start], (i*len >= m->desc_len) ? (m->desc_len - start) : len );
     start = i*len ;
