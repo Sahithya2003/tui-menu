@@ -90,7 +90,7 @@ void getxy(uint_fast16_t *y, uint_fast16_t *x) {
 }
 //////////////////////////////////////
 void drawbox(float mv, float mh) {
-  move(399, 399);
+  move(1000, 1000);
   getxy(&ymax, &xmax);
   xmid = xmax * mh; //vertical line
   ymid = ymax * mv; //horizontal line
@@ -140,7 +140,7 @@ void drawlab() {
       cdc_send("\\/",2);
       reset();
       }
-      if (i == selection){    
+      if (i == selection){
         move(((i + 1) * 2)-1 +3, lmargin);
         cdc_send(seq_fgcolor,LEN(seq_fgcolor));
         cdc_send("▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",42);
@@ -164,7 +164,7 @@ void drawlab() {
         cdc_send(" BLE ",6);
       if(i<=9)
         cdc_send(" ",1);
-      
+
       reset();
     }
   }
@@ -177,7 +177,7 @@ void drawlab() {
       cdc_send("/\\",2);
       reset();
       }
-      if (i == selection){    
+      if (i == selection){
         move(((i-labmax + 1) * 2)-1 +3, lmargin);
         cdc_send(seq_fgcolor,LEN(seq_fgcolor));
         cdc_send("▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",42);
@@ -201,7 +201,7 @@ void drawlab() {
         cdc_send(" BLE ",6);
       if(i<=9)
         cdc_send(" ",1);
-      
+
       reset();
     }
   }
@@ -211,17 +211,17 @@ void drawlab() {
 void drawlabdetials() {
   Menuitem *m;
   m = &menu[selection];
-  uint_fast16_t start = 0;  
+  uint_fast16_t start = 0;
   int_fast16_t len = xmax-xmid-(DESCMARG*2);
   uint_fast16_t y = ((1 - MH) * xmax) / 2 - m->title_len / 2;
-  
+
   cdc_send(seq_fgcolor, LEN(seq_fgcolor));
-  move(2,xmid+y);  
+  move(2,xmid+y);
   cdc_send(m->title, m->title_len);
   cdc_send(seq_reset, LEN(seq_reset));
 
   for (uint_fast16_t i = 1; ; i++) {
-    move(i+5,xmid+DESCMARG+1); 
+    move(i+5,xmid+DESCMARG+1);
     cdc_send(&m->desc[start], (i*len >= m->desc_len) ? (m->desc_len - start) : len );
     start = i*len ;
     if(start >= m->desc_len)  break;
@@ -229,14 +229,14 @@ void drawlabdetials() {
 }
 //////////////////////////////////////
 void drawfooter() {
-//  _____                             _      _____    _____ 
+//  _____                             _      _____    _____
 // /  __ \                           | |    |_   _|  |_   _|
-// | /  \/ ___  _ __ ___  _ __   __ _| |_ _ __| |  ___ | |  
-// | |    / _ \| '_ ` _ \| '_ \ / _` | __| '__| | / _ \| |  
-// | \__/\ (_) | | | | | | |_) | (_| | |_| | _| || (_) | |  
-//  \____/\___/|_| |_| |_| .__/ \__,_|\__|_| \___/\___/\_/  
-//                       | |                                
-//                       |_|                                
+// | /  \/ ___  _ __ ___  _ __   __ _| |_ _ __| |  ___ | |
+// | |    / _ \| '_ ` _ \| '_ \ / _` | __| '__| | / _ \| |
+// | \__/\ (_) | | | | | | |_) | (_| | |_| | _| || (_) | |
+//  \____/\___/|_| |_| |_| .__/ \__,_|\__|_| \___/\___/\_/
+//                       | |
+//                       |_|
 
   static uint8_t compatriot[8][57] = {
   {" _____                             _      _____    _____ "},
@@ -250,7 +250,7 @@ void drawfooter() {
   };
   uint_fast16_t y = ((1 - MH) * xmax) / 2 - 57 / 2;
   uint_fast16_t x = ((1 - MV) * ymax) / 4;
-  
+
   // CompatrIoT
   cdc_send(seq_fgcolor, LEN(seq_fgcolor));
   for (uint_fast16_t i = 0; i < 8; i++) {
@@ -259,12 +259,12 @@ void drawfooter() {
 
   //Redentio Solutions
   cdc_send(FGRED, LEN(FGRED));
-  y = ((1 - MH) * xmax) / 2 - 17 / 2; 
+  y = ((1 - MH) * xmax) / 2 - 17 / 2;
   move(ymid + x + 8,xmid+y+10);
   cdc_send("Redantio Solution", 17);
   cdc_send(seq_reset, LEN(seq_reset));
   move(399,399);
-  
+
 }
 //////////////////////////////////////
 // Changes the selection based on arrow key input
@@ -313,7 +313,7 @@ void redraw() {
     move(ymax/2, xmax/2-10);
     cdc_send(error, LEN(error));
     move(ymax/2+1, xmax/2-10);
-    cdc_send("press any arrow key", 20);    
+    cdc_send("press any arrow key", 20);
   }
   else{
     drawbox(MV,MH);     // Layout
