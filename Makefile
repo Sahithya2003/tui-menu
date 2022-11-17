@@ -4,6 +4,7 @@
 SHELL:=/bin/bash
 build:
 	gcc main.c menu.c -o main
+	size main
 
 run: build
 	socat -d -d pty,raw,echo=0 pty,raw,echo=0 2>&1| grep -o --line-buffered '/dev/pts/[0-9]*' |\
